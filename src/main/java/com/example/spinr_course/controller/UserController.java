@@ -36,4 +36,9 @@ public class UserController {
         return userService.registerUser(userReq);
     }
 
+    @PostMapping("/register-new-2")
+    public ResponseEntity<LinkedHashMap<String, Object>> registerUserNew1(@RequestBody UserReq userReq) {
+        return userService.registerUser(userReq);
+    }
+
 }
