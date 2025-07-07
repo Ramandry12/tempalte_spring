@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     services:
@@ -46,8 +46,13 @@ jobs:
     - name: Run Unit Tests with Maven
       run: mvn test
 
+    - name: Install Docker and Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker.io docker-compose
+
     - name: Build Docker Image
-      run: docker build -t spring-boot-docker-app .
+      run: docker-compose build
 
     - name: Run Docker Compose
       run: docker-compose up -d
