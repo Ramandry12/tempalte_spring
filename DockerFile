@@ -4,6 +4,9 @@ FROM openjdk:17-jdk-slim as build
 # Set working directory
 WORKDIR /app
 
+# Install Maven
+RUN apt-get update && apt-get install -y maven
+
 # Copy pom.xml dan file dependency lainnya ke dalam container
 COPY pom.xml .
 

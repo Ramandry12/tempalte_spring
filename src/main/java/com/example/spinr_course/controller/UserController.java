@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @CrossOrigin(maxAge = 3600)
 @RequestMapping("/api/auth")
@@ -26,11 +25,15 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-    
 
     @PostMapping("/register")
     public ResponseEntity<LinkedHashMap<String, Object>> registerUser(@RequestBody UserReq userReq) {
         return userService.registerUser(userReq);
     }
-    
+
+    @PostMapping("/register-new")
+    public ResponseEntity<LinkedHashMap<String, Object>> registerUserNew(@RequestBody UserReq userReq) {
+        return userService.registerUser(userReq);
+    }
+
 }
