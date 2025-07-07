@@ -1,0 +1,32 @@
+# Gunakan image OpenJDK 17 sebagai base image
+FROM openjdk:17-jdk-slim as build
+
+# Set working directory
+WORKDIR /app
+
+# Copy pom.xml dan file dependency lainnya ke dalam container
+COPY pom.xml .
+
+# Download dependencies
+RUN mvn dependency:go-offline
+
+# Copy seluruh source code aplikasi
+COPY src ./src
+
+# Build aplikasi Spring Boot
+RUN mvn clean package -DskipTests
+
+# Gunakan image openjdk lagi untuk menjalankan aplikasi
+FROM openjdk:17-jdk-slim
+
+# Set working directory untuk aplikasi
+WORKDIR /app
+
+# Salin file jar yang telah dibangun
+COPY --from=build /app/target/*.jar app.jar
+
+# Expose port 8080
+EXPOSE 8080
+
+# Jalankan aplikasi Spring Boot
+ENTRYPOINT ["java", "-jar", "app.jar"]
